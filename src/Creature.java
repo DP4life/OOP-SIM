@@ -1,3 +1,5 @@
-public interface Creature extends Object{
-	void Interaction(Player _Player);
+import java.util.function.ObjDoubleConsumer;
+
+public interface Creature{
+	void Interaction(Explorer _Player);
 }

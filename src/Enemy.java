@@ -1,7 +1,6 @@
 public class Enemy implements Creature{
 	private String name;
 	private int baseDamage;
-	private int damage;
 	private int health;
 	private int money;
 
@@ -23,9 +22,6 @@ public class Enemy implements Creature{
 	public void SetName(String _name){
 		name = _name;
 	}
-	public int EnemyAttack(){
-		return damage;
-	}
 	public void setBaseDamage(int baseDamage) {
 		this.baseDamage = baseDamage;
 	}
@@ -36,21 +32,19 @@ public class Enemy implements Creature{
 		this.health = health;
 	}
 
-	public void Interaction(Player _player){
+	public void Interaction(Explorer _explorer){
 		System.out.println("============================================================");
 		System.out.println("> You get attacked by a " + name + "!");
 		int damageMultiplier;
-		if (_player.PlayerAttack()>health) damageMultiplier = 1;
-			else damageMultiplier = _player.PlayerAttack()/health;
-		System.out.println("============================================================");
+		if (_explorer.PlayerAttack()>health) damageMultiplier = 1;
+			else damageMultiplier = _explorer.PlayerAttack()/health;
 		System.out.println("You have defeated the " + name);
 		int damage = baseDamage * damageMultiplier;
-		System.out.println("You lost " + damage + " health");
-		System.out.println("You got " + (money) + " caps" );
-		_player.SetMoney(_player.getMoney()+money);
-		_player.TakeDamage(damage);
-		if (_player.GetHealth() <= 0){
-			_player.Die();
+		System.out.println("You got " + (money) + " $" );
+		_explorer.SetMoney(_explorer.getMoney()+money);
+		_explorer.TakeDamage(damage);
+		if (_explorer.GetHealth() <= 0){
+			_explorer.Die();
 		}
 	}
 	public int getBaseDamage() {

@@ -1,8 +1,5 @@
-public class Consumable implements Object{
-	private String name;
-	private int effect;
+public class Consumable extends Object{
 	private int radiationEffect;
-	private int price;
 	private String type;
 
 	Consumable(){
@@ -49,15 +46,15 @@ public class Consumable implements Object{
 	public void DisplayConsumableDescripion(){
 		switch (type){
 			case "Food":
-				System.out.println(getName() + " Hunger: +" + Integer.toString(getEffect())  + " RAD: +" + Integer.toString(getRadiationEffect()));
+				System.out.println(ConsoleColors.YELLOW+ getName() + ConsoleColors.RESET + " Hunger: +" + Integer.toString(getEffect())  + " RAD: +" + Integer.toString(getRadiationEffect()) + " Price: " + price);
 				break;
 
 			case "Drink":
-				System.out.println(getName() + " Thirst: +" + Integer.toString(getEffect()) + " RAD: +" + Integer.toString(getRadiationEffect()));
+				System.out.println(ConsoleColors.BLUE + getName() + ConsoleColors.RESET + " Thirst: +" + Integer.toString(getEffect()) + " RAD: +" + Integer.toString(getRadiationEffect())+ " Price: " + price);
 				break;
 			
 			case "Medicine":
-				System.out.println(getName() + " HP: +" + Integer.toString(getEffect()) + " RAD: -" + Integer.toString(getRadiationEffect()));
+				System.out.println(ConsoleColors.GREEN+ getName() + ConsoleColors.RESET+ " HP: +" + Integer.toString(getEffect()) + " RAD:" + Integer.toString(getRadiationEffect()) + " Price: " + price);
 				break;
 			default:
 				System.out.println("what the fuck even is this consumable");
