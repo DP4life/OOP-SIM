@@ -8,13 +8,13 @@ public class Mutant extends Enemy{
 
 	public void Interaction(Explorer _player){
 		System.out.println("============================================================");
-		System.out.println("> You get attacked by a " + GetName() + "!");
+		System.out.println("> "+ _player.name+" gets attacked by a " + GetName() + "!");
 		int damageMultiplier;
 		if (_player.PlayerAttack()>getHealth()) damageMultiplier = 1;
 			else damageMultiplier = _player.PlayerAttack()/getHealth();
-		System.out.println("You have defeated the " + GetName());
+		System.out.println(_player.name + " has defeated the " + GetName());
 		int damage = getBaseDamage() * damageMultiplier;
-		System.out.println("You got " + damage + " radiation");
+		System.out.println(_player.name +" got " + damage + " radiation");
 		_player.TakeRadiation(damage);
 		if (_player.getRadiation() >= 100){
 			_player.Die();

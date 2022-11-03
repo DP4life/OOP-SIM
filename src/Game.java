@@ -38,9 +38,31 @@ public class Game{
 		explorer.setWeapon(null);
 		explorer.setArmor(null);
 		explorer.EmptyInventory();
+		explorer.distanceTraveled = 0;
+
+
+		explorer.setHealth(100);
+		explorer.setRadiation(0);
+		explorer.setHunger(100);
+		explorer.setThirst(100);
 	}
 
 	public void Prepare(){
+		System.out.println(" > Send an explorer?");
+		System.out.println(" [0] Exit");
+		System.out.println(" [1] Yes");
+
+		byte choice0 = scanner.nextByte();
+
+		switch (choice0){
+			case 0:
+				System.out.println(" > Exiting...");
+				System.exit(0);
+				break;
+			case 1:
+				break;
+		}
+
 		String _name = "-";
 		System.out.println(" > How will you name your first explorer?");
 		
@@ -54,20 +76,23 @@ public class Game{
 		sponsor.GearUp(explorer);
 		
 	}
-	// 1. Attacked by Raier
-	// 2. Attacked by Mutant
-	// 3. Discovering a Place 
-	// 4. Meeting a Traider
-	// 5. Nothing
+
 	public void Next(){
 		explorer.distanceTraveled += distance;
 		explorer.setHunger(explorer.getHunger() - 5);
 		explorer.setThirst(explorer.getThirst() - 10);
-		fate = rand.nextInt(5);
+		fate = rand.nextInt(100);
 
-		switch (fate){
-			case 0: 
-				
+		if (fate <= 20){
+			places[rand.nextInt(places.length)].Discover(explorer);
+		} else if (fate <= 50){
+			traders[rand.nextInt(traders.length)].Interaction(explorer);
+		} else {
+			enemies[rand.nextInt(enemies.length)].Interaction(explorer);
+		}
+
+		if (explorer.getHunger() <= 0 || explorer.getThirst() <=0 || explorer.getRadiation() >= 100 || explorer.GetHealth() <= 0){
+			explorer.Die();
 		}
 	}
 }

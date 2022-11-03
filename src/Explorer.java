@@ -18,6 +18,8 @@ public class Explorer extends Object{
 
 	private static int money;
 
+	public boolean died = false;
+
 
 	Explorer(){
 		attack = defaultAttack;
@@ -25,6 +27,8 @@ public class Explorer extends Object{
 		radiation = 0;
 		hunger = maxHunger;
 		thirst = maxThirst;
+
+		
 	}
 
 	//Inventory
@@ -114,11 +118,20 @@ public class Explorer extends Object{
 		radiation += damage;
 	}
 	public void Die(){
-		System.out.println(name + " is dead lol");
-		System.exit(0);
+		System.out.println(" > " +name + " is dead lol");
+		died = true;
+		
 	}
 
 	//getters and setters
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public void setRadiation(int radiation) {
+		this.radiation = radiation;
+	}
 
 	public Armor getArmor() {
 		return armor;

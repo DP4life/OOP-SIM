@@ -83,7 +83,14 @@ public class Main {
         Explorer explorer = new Explorer();
         Sponsor sponsor = new Sponsor(consumables, armors, weapons);
         Game game = new Game(explorer, enemies, traders, places, sponsor);
+
+        //Gameplay Loop
+
         game.Setup();
         game.Prepare();
+        while(explorer.died == false){
+            game.Next();
+            
+        }
     }
 }
