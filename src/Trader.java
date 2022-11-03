@@ -32,7 +32,7 @@ public class Trader implements Creature{
 			}
 		}
 		if (bought == false){
-			System.out.println(" > " + _explorer.name + "didn't buy anything");
+			System.out.println(" > " + _explorer.name + " didn't buy anything");
 		}
 	}
 }

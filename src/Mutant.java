@@ -11,13 +11,14 @@ public class Mutant extends Enemy{
 		System.out.println("> "+ _player.name+" gets attacked by a " + GetName() + "!");
 		int damageMultiplier;
 		if (_player.PlayerAttack()>getHealth()) damageMultiplier = 1;
-			else damageMultiplier = _player.PlayerAttack()/getHealth();
+			else damageMultiplier = getHealth()/_player.PlayerAttack();
 		System.out.println(_player.name + " has defeated the " + GetName());
 		int damage = getBaseDamage() * damageMultiplier;
-		System.out.println(_player.name +" got " + damage + " radiation");
 		_player.TakeRadiation(damage);
-		// if (_player.getRadiation() >= 100){
-		// 	_player.Die();
-		// }
+		System.out.println(_player.name +" got " + damage + " radiation | Total Radiation: [" +_player.getRadiation() +"/100]");
+		if (_player.getRadiation() >= 100){
+			_player.Die();
+			return;
+		}
 	}
 }

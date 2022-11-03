@@ -14,7 +14,7 @@ public class Place extends Object{
 	
 	public void Discover(Explorer _player){
 		System.out.println("============================================================");
-		System.out.println(_player.name + " has discovered an" + name);
+		System.out.println(_player.name + " has discovered an " + name);
 		System.out.println("In " + name + " there is a " + placeEnemy.GetName());
 		placeEnemy.Interaction(_player);
 		System.out.println("From the " + name + " " + _player.name + " has recovered");

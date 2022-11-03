@@ -1,3 +1,6 @@
+import java.lang.Math;
+
+
 public class Explorer extends Object{
 	private int maxHealth = 100;
 	private int health;
@@ -26,6 +29,7 @@ public class Explorer extends Object{
 		radiation = 0;
 		hunger = maxHunger;
 		thirst = maxThirst;
+		money = 10;
 	}
 
 	//Inventory
@@ -68,39 +72,74 @@ public class Explorer extends Object{
 
 	public void StoreConsumable(Consumable _consumable){
 		inventory[inventoryIndex] = _consumable;
-		System.out.println("============================================================");
 		System.out.print(" > " +name + " stored: ");
 		_consumable.DisplayConsumableDescripion();
 		inventoryIndex++;
 
 	}
 	public void ConsumeConsumable(int index){
+		System.out.println("---------------------------------------------------------");
+
+		System.out.println(name + " consumed " + inventory[index].name);
+		inventory[index].DisplayConsumableDescripion();
+
+
 		switch (inventory[index].getType()){
 			case "Food": 
 				hunger += inventory[index].getEffect();
+				if (hunger >= 100){
+					hunger = 100;
+				}
 				radiation += inventory[index].getRadiationEffect();
+				if (radiation <=0){
+					radiation = 0;
+				}
+				System.out.println("Hunger: " + hunger + "/100");
+				System.out.println("Radiation: " + radiation + "/100");
+
 				break;
 			case "Drink":
 				thirst += inventory[index].getEffect();
 				radiation += inventory[index].getRadiationEffect();
+				if (thirst >= 100){
+					thirst = 100;
+				}
+				if (radiation <=0){
+					radiation = 0;
+				}
+				System.out.println("Thirst: " + thirst + "/100");
+				System.out.println("Radiation: " + radiation + "/100");
+				
+
 				break;
 			case "Medicine":
 				health += inventory[index].getEffect();
 				radiation += inventory[index].getRadiationEffect();
+				if (health >= 100){
+					health = 100;
+				}
+				if (radiation <=0){
+					radiation = 0;
+				}
+				System.out.println("Health: " + health + "/100");
+				System.out.println("Radiation: " + radiation + "/100");
+				
+
 		}
+
 
 		inventory[index] = null;
 		inventoryIndex--;
-		Consumable[] temp = new Consumable[inventory.length];
-		for (int i = 0; i < inventory.length; i ++){
-			if (inventory[i] != null){
-				temp[i] = inventory[i];
-			}	
+		Consumable[] temp = new Consumable[inventoryIndex];
+		for (int i = 0, k = 0; i < inventoryIndex+1; i ++){
+			if (i == index){
+				continue;
+			}
+			temp[k++] = inventory[i];
 		}
 
 		EmptyInventory();
-
-		for(int i = 0; i < inventory.length; i++){
+		for(int i = 0; i < inventoryIndex; i++){
 			inventory[i] = temp[i];
 		}
 		
@@ -109,6 +148,7 @@ public class Explorer extends Object{
 
 	//gameplay
 	public void TakeBreak(){
+
 		if (hunger < 100 && inventory[0] != null){
 			int min = 0;
 			int minI = 0;
@@ -133,6 +173,8 @@ public class Explorer extends Object{
 				ConsumeConsumable(minI);
 			}	
 		}
+
+		if(died) return;
 
 		if (thirst < 100 && inventory[0] != null){
 			int min = 0;
@@ -160,6 +202,8 @@ public class Explorer extends Object{
 			}
 			
 		}
+
+		if(died) return;
 
 		if (health < 100 && inventory[0] != null){
 			int min = 0;
@@ -237,23 +281,29 @@ public class Explorer extends Object{
 	}
 
 	public void TakeDamage(int damage){
-		int realDamage;
-		if (armor == null)
+		float realDamage;
+		if (armor == null){
 			realDamage = damage;
-		else 
-			realDamage = damage - damage * (armor.effect/100);
+		}
+		else {
+			realDamage = (float)(100-armor.effect)/100 * (float)damage;
+		}
+			
 
-		health -= realDamage;
+		health -= (int)realDamage;
 
-		System.out.println(name + " lost " + realDamage + "HP");
-		System.out.println(name + " has " + health + "HP");
+		System.out.println(name + " lost " + (int)realDamage + "HP " + "| Total HP: [" + health +"/100]");
 	}
 	public void TakeRadiation(int damage){
 		radiation += damage;
 	}
 	public void Die(){
+		System.out.println("============================================================");
 		System.out.println(" > " +name + " is dead lol");
 		died = true;
+		DisplayStats();
+		System.out.println(" > " + name + " has travelled " + distanceTraveled + " m");
+		
 		
 	}
 
@@ -312,5 +362,9 @@ public class Explorer extends Object{
 	}
 	public void setName(String _name){
 		name = _name;		
+	}
+
+	public void setInventoryIndex(int inventoryIndex) {
+		this.inventoryIndex = inventoryIndex;
 	}
 }

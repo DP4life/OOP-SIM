@@ -1,6 +1,5 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.lang.Object;
 
 public class Game{
 	private int defaultDistance = 500;
@@ -22,6 +21,8 @@ public class Game{
 	Weapon[] weapons;
 	Armor[] armors;
 
+	boolean won;
+
 	Game(Explorer _explorer, Enemy[] _enemies, Trader[] _traders, Place[] _places, Sponsor _sponsor){
 		distance = defaultDistance;
 		rand = new Random();
@@ -32,21 +33,23 @@ public class Game{
 		places = _places;
 
 		sponsor = _sponsor;
+		won = false;
 	}
 
 	
 	public void Setup(){
-		explorer.SetMoney(100);
 		explorer.setWeapon(null);
 		explorer.setArmor(null);
 		explorer.EmptyInventory();
 		explorer.distanceTraveled = 0;
+		explorer.SetMoney(explorer.getMoney()*10);
 
-
+		explorer.setInventoryIndex(0);
 		explorer.setHealth(100);
 		explorer.setRadiation(0);
 		explorer.setHunger(100);
 		explorer.setThirst(100);
+		explorer.died = false;
 	}
 
 	public void Prepare(){
@@ -66,7 +69,7 @@ public class Game{
 		}
 
 		String _name = "-";
-		System.out.println(" > How will you name your first explorer?");
+		System.out.println(" > How will you name your explorer?");
 		
 		scanner.nextLine();
 		System.out.print(" > Name: ");
@@ -76,6 +79,9 @@ public class Game{
 		explorer.setName(_name);
 
 		sponsor.GearUp(explorer);
+		System.out.println(ConsoleColors.YELLOW + "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + ConsoleColors.RESET);
+		System.out.println(ConsoleColors.YELLOW +"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + ConsoleColors.RESET);
+
 		
 	}
 
@@ -83,6 +89,9 @@ public class Game{
 		explorer.distanceTraveled += distance;
 		if (explorer.distanceTraveled >= winDistance){
 			System.out.println("You won! " + explorer.name + " Has travelled " + explorer.distanceTraveled + " m and has arrived into the legenday city of Chisinau, the last haven for humanity");
+			won = true;
+			System.exit(0);
+			return;
 		}
 		explorer.setHunger(explorer.getHunger() - 5);
 		explorer.setThirst(explorer.getThirst() - 10);
@@ -96,9 +105,15 @@ public class Game{
 			enemies[rand.nextInt(enemies.length)].Interaction(explorer);
 		}
 
-		if (explorer.getHunger() <= 0 || explorer.getThirst() <=0 || explorer.getRadiation() >= 100 || explorer.GetHealth() <= 0){
+		if(explorer.died){
+			return;
+		}
+
+		explorer.TakeBreak();
+
+		if (explorer.getHunger() <= 0 || explorer.getThirst() <=0 || explorer.getRadiation() >= 100 || explorer.GetHealth() <= 0 || explorer.died){
 			explorer.Die();
-			System.out.println(explorer.name + " has travelled " + explorer.distanceTraveled + " m");
+			return;
 		}
 	}
 }

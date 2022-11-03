@@ -5,7 +5,7 @@ public class Consumable extends Object{
 	Consumable(){
 
 	}
-	Consumable(String _name, int _effect, int _radiationEffect, int _price){
+	Consumable(String _name, int _effect, int _radiationEffect, int _price, String _type){
 		name = _name;
 		effect = _effect;
 		radiationEffect = _radiationEffect;

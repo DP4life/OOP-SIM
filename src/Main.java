@@ -84,14 +84,22 @@ public class Main {
         Sponsor sponsor = new Sponsor(consumables, armors, weapons);
         Game game = new Game(explorer, enemies, traders, places, sponsor);
 
-        //Gameplay Loop
+        // //Tests
+        // game.Setup();
+        // game.Prepare();
+        // enemies[1].Interaction(explorer);
 
-        game.Setup();
-        game.Prepare();
-        // enemies[0].Interaction(explorer);
-        while(explorer.died == false){
-            game.Next();
-            explorer.TakeBreak();
+        //Gameplay Loop
+        while(game.won == false){
+            game.Setup();
+            game.Prepare();
+            // enemies[0].Interaction(explorer);
+            while(explorer.died == false){
+                game.Next();
+                
+            }
         }
+
+        
     }
 }
