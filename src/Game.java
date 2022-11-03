@@ -6,6 +6,8 @@ public class Game{
 	private int defaultDistance = 500;
 
 	private int distance;
+	int winDistance = 10000;
+
 	private int fate;
 	private Random rand;
 	Scanner scanner = new Scanner(System.in);
@@ -66,7 +68,7 @@ public class Game{
 		String _name = "-";
 		System.out.println(" > How will you name your first explorer?");
 		
-
+		scanner.nextLine();
 		System.out.print(" > Name: ");
 		_name = scanner.nextLine();
 		System.out.println();
@@ -79,6 +81,9 @@ public class Game{
 
 	public void Next(){
 		explorer.distanceTraveled += distance;
+		if (explorer.distanceTraveled >= winDistance){
+			System.out.println("You won! " + explorer.name + " Has travelled " + explorer.distanceTraveled + " m and has arrived into the legenday city of Chisinau, the last haven for humanity");
+		}
 		explorer.setHunger(explorer.getHunger() - 5);
 		explorer.setThirst(explorer.getThirst() - 10);
 		fate = rand.nextInt(100);
@@ -93,6 +98,7 @@ public class Game{
 
 		if (explorer.getHunger() <= 0 || explorer.getThirst() <=0 || explorer.getRadiation() >= 100 || explorer.GetHealth() <= 0){
 			explorer.Die();
+			System.out.println(explorer.name + " has travelled " + explorer.distanceTraveled + " m");
 		}
 	}
 }

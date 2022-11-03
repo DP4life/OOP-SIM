@@ -88,9 +88,10 @@ public class Main {
 
         game.Setup();
         game.Prepare();
+        // enemies[0].Interaction(explorer);
         while(explorer.died == false){
             game.Next();
-            
+            explorer.TakeBreak();
         }
     }
 }

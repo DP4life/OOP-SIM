@@ -16,8 +16,8 @@ public class Mutant extends Enemy{
 		int damage = getBaseDamage() * damageMultiplier;
 		System.out.println(_player.name +" got " + damage + " radiation");
 		_player.TakeRadiation(damage);
-		if (_player.getRadiation() >= 100){
-			_player.Die();
-		}
+		// if (_player.getRadiation() >= 100){
+		// 	_player.Die();
+		// }
 	}
 }

@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Trader implements Creature{
 	private Consumable[] traderInventory = new Consumable[3];
 	public String name;
@@ -14,7 +12,7 @@ public class Trader implements Creature{
 
 	public void Interaction(Explorer _explorer){
 		System.out.println("============================================================");
-		System.out.println(" > " + _explorer.getName() + " met a trader!");
+		System.out.println(" > " + _explorer.getName() + " met a trader by the name "+ name);
 
 		Barter(_explorer);
 		
@@ -23,6 +21,18 @@ public class Trader implements Creature{
 
 	public void Barter(Explorer _explorer){
 		System.out.println("============================================================");
-		
+		boolean bought = false;
+		for(int i = 0; i < traderInventory.length; i++){
+			if(_explorer.getMoney() > traderInventory[i].price){
+				System.out.println(" > " + _explorer.name + " bought " + traderInventory[i].name);
+				_explorer.StoreConsumable(traderInventory[i]);
+				_explorer.SetMoney(_explorer.getMoney() - traderInventory[i].price);
+				bought = true;
+				break;
+			}
+		}
+		if (bought == false){
+			System.out.println(" > " + _explorer.name + "didn't buy anything");
+		}
 	}
 }

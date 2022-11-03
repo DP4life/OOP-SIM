@@ -3,7 +3,6 @@ public class Explorer extends Object{
 	private int health;
 
 	private int attack;
-	private int defaultAttack = 1;
 
 	private int thirst;
 	private int maxThirst = 100;
@@ -22,13 +21,11 @@ public class Explorer extends Object{
 
 
 	Explorer(){
-		attack = defaultAttack;
+		attack = 1;
 		health = maxHealth;
 		radiation = 0;
 		hunger = maxHunger;
 		thirst = maxThirst;
-
-		
 	}
 
 	//Inventory
@@ -77,14 +74,146 @@ public class Explorer extends Object{
 		inventoryIndex++;
 
 	}
-	public void ConsumeConsumable(){
+	public void ConsumeConsumable(int index){
+		switch (inventory[index].getType()){
+			case "Food": 
+				hunger += inventory[index].getEffect();
+				radiation += inventory[index].getRadiationEffect();
+				break;
+			case "Drink":
+				thirst += inventory[index].getEffect();
+				radiation += inventory[index].getRadiationEffect();
+				break;
+			case "Medicine":
+				health += inventory[index].getEffect();
+				radiation += inventory[index].getRadiationEffect();
+		}
+
+		inventory[index] = null;
+		inventoryIndex--;
+		Consumable[] temp = new Consumable[inventory.length];
+		for (int i = 0; i < inventory.length; i ++){
+			if (inventory[i] != null){
+				temp[i] = inventory[i];
+			}	
+		}
+
+		EmptyInventory();
+
+		for(int i = 0; i < inventory.length; i++){
+			inventory[i] = temp[i];
+		}
 		
 
 	}
 
 	//gameplay
 	public void TakeBreak(){
+		if (hunger < 100 && inventory[0] != null){
+			int min = 0;
+			int minI = 0;
+			int count = 0;
+			boolean firstFound = false;
+			for (int i = 0; i < inventoryIndex; i++){
+				if (inventory[i].getType() == "Food"){
+					count ++;
+					if (!firstFound){
+						min = inventory[i].effect;
+						minI = i;
+						firstFound = true;
+					} else {
+						if (inventory[i].effect < min){
+							min = inventory[i].effect;
+							minI = i;
+						}
+					}
+				}
+			}
+			if (count > 0){
+				ConsumeConsumable(minI);
+			}	
+		}
 
+		if (thirst < 100 && inventory[0] != null){
+			int min = 0;
+			int minI = 0;
+			int count = 0;
+			boolean firstFound = false;
+			for (int i = 0; i < inventoryIndex; i++){
+				if (inventory[i].getType() == "Drink"){
+					count ++;
+					if (!firstFound){
+						min = inventory[i].effect;
+						minI = i;
+						firstFound = true;
+					} else {
+						if (inventory[i].effect < min){
+							min = inventory[i].effect;
+							minI = i;
+						}
+
+					}
+				}
+			}
+			if (count > 0){
+				ConsumeConsumable(minI);
+			}
+			
+		}
+
+		if (health < 100 && inventory[0] != null){
+			int min = 0;
+			int minI = 0;
+			int count = 0;
+			boolean firstFound = false;
+			for (int i = 0; i < inventoryIndex; i++){
+				if (inventory[i].getType() == "Medicine"){
+					count ++;
+					if (!firstFound){
+						min = inventory[i].effect;
+						minI = i;
+						firstFound = true;
+					} else {
+						if (inventory[i].effect < min){
+							min = inventory[i].effect;
+							minI = i;
+						}
+
+					}
+				}
+			}
+			if (count > 0){
+				ConsumeConsumable(minI);
+			}
+			
+		}
+
+		if (radiation > 0 && inventory[0] != null){
+			int max = 0;
+			int maxI = 0;
+			int count = 0;
+			boolean firstFound = false;
+			for (int i = 0; i < inventoryIndex; i++){
+				if (inventory[i].getType() == "Medicine"){
+					count ++;
+					if (!firstFound){
+						max = inventory[i].getRadiationEffect();
+						maxI = i;
+						firstFound = true;
+					} else {
+						if (inventory[i].getRadiationEffect() > max){
+							max = inventory[i].getRadiationEffect();
+							maxI = i;
+						}
+
+					}
+				}
+			}
+			if (count > 0){
+				ConsumeConsumable(maxI);
+			}
+			
+		}
 	}
 
 	//stats
@@ -97,10 +226,14 @@ public class Explorer extends Object{
 		TakeBreak();
 	}
 	public int PlayerAttack(){
-		if (weapon == null)
+		if (weapon == null){
 			return attack;
-		else 
+			
+		}
+		else {
 			return weapon.effect;
+		}
+			
 	}
 
 	public void TakeDamage(int damage){
@@ -109,6 +242,7 @@ public class Explorer extends Object{
 			realDamage = damage;
 		else 
 			realDamage = damage - damage * (armor.effect/100);
+
 		health -= realDamage;
 
 		System.out.println(name + " lost " + realDamage + "HP");

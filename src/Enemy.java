@@ -35,17 +35,24 @@ public class Enemy implements Creature{
 	public void Interaction(Explorer _explorer){
 		System.out.println("============================================================");
 		System.out.println("> "+ _explorer.name +" get attacked by a " + name + "!");
+		
 		int damageMultiplier;
-		if (_explorer.PlayerAttack()>health) damageMultiplier = 1;
-			else damageMultiplier = _explorer.PlayerAttack()/health;
+		if (_explorer.PlayerAttack()>health){
+			damageMultiplier = 1;
+		} else {
+			damageMultiplier = health/_explorer.PlayerAttack();
+			
+		}
+		
+		
 		System.out.println(_explorer.name + " has defeated the " + name);
 		int damage = baseDamage * damageMultiplier;
 		System.out.println(_explorer.name +" got " + (money) + " $" );
 		_explorer.SetMoney(_explorer.getMoney()+money);
 		_explorer.TakeDamage(damage);
-		if (_explorer.GetHealth() <= 0){
-			_explorer.Die();
-		}
+		// if (_explorer.GetHealth() <= 0){
+		// 	_explorer.Die();
+		// }
 	}
 	public int getBaseDamage() {
 		return baseDamage;
