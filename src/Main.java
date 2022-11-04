@@ -84,11 +84,6 @@ public class Main {
         Sponsor sponsor = new Sponsor(consumables, armors, weapons);
         Game game = new Game(explorer, enemies, traders, places, sponsor);
 
-        // //Tests
-        // game.Setup();
-        // game.Prepare();
-        // enemies[1].Interaction(explorer);
-
         //Gameplay Loop
         while(game.won == false){
             game.Setup();

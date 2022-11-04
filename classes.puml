@@ -1,0 +1,104 @@
+@startuml Simulation
+
+Object <|-- Explorer
+Object <|-- Consumable
+
+Creature <|-- Enemy 
+Creature <|-- Trader 
+
+Enemy <|-- Raider
+Enemy <|-- Mutant
+
+Consumable <|-- Food 
+Consumable <|-- Drink 
+Consumable <|-- Medicine
+
+Object <|-- Weapon
+Object <|-- Armor
+
+class Object{
+	+ String name
+	+ int effect
+}
+interface Creature{
+	+ Interaction()
+}
+
+class Consumable{
+	- int radiationEffect
+	- int price
+	- String type
+
+	+ DisplayConsumableDescription()
+}
+
+class Enemy{
+	- String name
+	- int baseDamage
+	- int damage
+	- int health
+	- int money
+
+	+ Interaction()
+}
+class Mutant{
+	{method}//reimplementing Interaction
+	+ Interaction()
+}
+class Raider{
+	+ Interaction()
+}
+class Trader{
+	+ Interaction()
+}
+
+class Explorer{
+	- int maxHealth = 100
+	- int health
+	..
+	- int attack
+	..
+	- int thirst
+	- int maxThirst = 100
+	- int hunger
+	- int maxHunger = 100
+	- int radiation = 0
+	- int maxRadiation = 100
+	..
+	- int money = 0
+	- Consumable[] playerInventory = new Consumable[100]
+	- int inventoryIndex = 0
+	--
+	+ DisplayInventory()
+	+ StoreConsumable()
+	+ ConsumeConsumable()
+	+ TakeBreak()
+	+ DisplayStats()
+	+ Die()
+
+}
+
+class Sponsor{
+	Consumable[] consumables
+	Armor[] armors 
+	Weapon[] weapons
+
+	GearUp()
+}
+
+class Game{
+	- int defaultDistance = 500
+	- int distance
+	+ int winDistance
+	- int fate
+	- Random rand 
+	+ Sponsor sponsor
+	+ Explorer explorer
+	+ Enemy[] enemies
+	+ Trader[] traders
+	+ Place[] places
+	+ Weapon[] weapons
+	+ Armor[] armors
+	+ boolean won
+}
+@enduml

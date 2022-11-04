@@ -14,7 +14,7 @@ JFLAGS = -g
 # typing 'make' will invoke the first target entry in the makefile 
 # (the default one in this case)
 #
-default: Main.class Food.class Enemy.class Drink.class Medicine.class Game.class Armor.class Weapon.class
+default: Main.class Object.class Game.class Weapon.class Armor.class Food.class Creature.class Consumable.class Enemy.class Drink.class Medicine.class Enemy.class Raider.class Mutant.class Sponsor.class Place.class Trader.class
 	
 
 # this target entry builds the Average class
@@ -23,6 +23,9 @@ default: Main.class Food.class Enemy.class Drink.class Medicine.class Game.class
 
 Main.class: Main.java
 	$(JCC) $(JFLAGS) Main.java
+
+Object.class: Object.java
+	$(JCC) $(JFLAGS) Object.java	
 
 Game.class: Game.java
 	$(JCC) $(JFLAGS) Game.java
@@ -36,6 +39,12 @@ Armor.class: Armor.java
 Food.class: Food.java
 	$(JCC) $(JFLAGS) Food.java
 
+Creature.class: Creature.java
+	$(JCC) $(JFLAGS) Creature.java	
+
+Consumable.class: Consumable.java
+	$(JCC) $(JFLAGS) Consumable.java	
+
 Enemy.class: Enemy.java
 	$(JCC) $(JFLAGS) Enemy.java
 
@@ -44,7 +53,24 @@ Drink.class: Drink.java
 
 Medicine.class: Medicine.java
 	$(JCC) $(JFLAGS) Medicine.java
+	
+Enemy.class: Enemy.java
+	$(JCC) $(JFLAGS) Enemy.java
 
+Raider.class: Raider.java
+	$(JCC) $(JFLAGS) Raider.java
+
+Mutant.class: Mutant.java
+	$(JCC) $(JFLAGS) Mutant.java	
+
+Sponsor.class: Sponsor.java
+	$(JCC) $(JFLAGS) Sponsor.java	
+
+Place.class: Place.java
+	$(JCC) $(JFLAGS) Place.java	
+	
+Trader.class: Trader.java
+	$(JCC) $(JFLAGS) Trader.java	
 
 # To start over from scratch, type 'make clean'.  
 # Removes all .class files, so that the next make rebuilds them
