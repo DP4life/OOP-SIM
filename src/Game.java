@@ -51,38 +51,12 @@ public class Game{
 		explorer.setThirst(100);
 		explorer.died = false;
 	}
-
+	//name
 	public void Prepare(){
-		System.out.println(" > Send an explorer?");
-		System.out.println(" [0] Exit");
-		System.out.println(" [1] Yes");
-
-		byte choice0 = scanner.nextByte();
-
-		switch (choice0){
-			case 0:
-				System.out.println(" > Exiting...");
-				System.exit(0);
-				break;
-			case 1:
-				break;
-		}
-
-		String _name = "-";
-		System.out.println(" > How will you name your explorer?");
+		explorer.setName(Control.ControlPrepare(this));
 		
-		scanner.nextLine();
-		System.out.print(" > Name: ");
-		_name = scanner.nextLine();
-		System.out.println();
-			
-		explorer.setName(_name);
-
 		sponsor.GearUp(explorer);
-		System.out.println(ConsoleColors.YELLOW + "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + ConsoleColors.RESET);
-		System.out.println(ConsoleColors.YELLOW +"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + ConsoleColors.RESET);
-
-		
+		Control.ControlEndPrepare();
 	}
 
 	public void Next(){

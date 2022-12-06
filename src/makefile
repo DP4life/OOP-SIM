@@ -14,7 +14,7 @@ JFLAGS = -g
 # typing 'make' will invoke the first target entry in the makefile 
 # (the default one in this case)
 #
-default: Main.class Object.class Game.class Weapon.class Armor.class Food.class Creature.class Consumable.class Enemy.class Drink.class Medicine.class Enemy.class Raider.class Mutant.class Sponsor.class Place.class Trader.class
+default: Main.class Object.class Game.class Weapon.class Armor.class Food.class Creature.class Consumable.class Explorer.class Drink.class Medicine.class Enemy.class Raider.class Mutant.class Sponsor.class Place.class Trader.class Control.class Model.class View.class
 	
 
 # this target entry builds the Average class
@@ -23,6 +23,15 @@ default: Main.class Object.class Game.class Weapon.class Armor.class Food.class 
 
 Main.class: Main.java
 	$(JCC) $(JFLAGS) Main.java
+
+View.class: View.java
+	$(JCC) $(JFLAGS) View.java
+
+Control.class: Control.java
+	$(JCC) $(JFLAGS) Control.java
+
+Model.class: Model.java
+	$(JCC) $(JFLAGS) Model.java
 
 Object.class: Object.java
 	$(JCC) $(JFLAGS) Object.java	
@@ -54,8 +63,8 @@ Drink.class: Drink.java
 Medicine.class: Medicine.java
 	$(JCC) $(JFLAGS) Medicine.java
 	
-Enemy.class: Enemy.java
-	$(JCC) $(JFLAGS) Enemy.java
+Explorer.class: Explorer.java
+	$(JCC) $(JFLAGS) Explorer.java
 
 Raider.class: Raider.java
 	$(JCC) $(JFLAGS) Raider.java
@@ -71,6 +80,10 @@ Place.class: Place.java
 	
 Trader.class: Trader.java
 	$(JCC) $(JFLAGS) Trader.java	
+
+ConsoleColors.class: ConsoleColors.java
+	$(JCC) $(JFLAGS) ConsoleColors.java	
+
 
 # To start over from scratch, type 'make clean'.  
 # Removes all .class files, so that the next make rebuilds them

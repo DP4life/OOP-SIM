@@ -45,23 +45,7 @@ public class Explorer extends Object{
 		money = newMoney;
 	}
 	public void DisplayInventory(){
-		System.out.println("============================================================");
-		System.out.println(" > Inventory: ");
-		if (weapon != null) {
-			System.out.print(" - Weapon: ");
-			weapon.DisplayWeapon();
-		}
-		if (armor != null){
-			System.out.print(" - Armor: ");
-			armor.DisplayArmor();
-		}
-		
-
-		for (int i = 0; i < inventoryIndex; i++){
-			System.out.print(" - ");
-			inventory[i].DisplayConsumableDescripion();
-		}
-		
+		Control.ViewExplorerInventory(this);
 	}
 	
 	public void EmptyInventory(){
@@ -262,11 +246,7 @@ public class Explorer extends Object{
 
 	//stats
 	public void DisplayStats(){
-		System.out.println("============================================================");
-		System.out.println("HP: " + health+"/"+maxHealth);
-		System.out.println("RAD: " + radiation+"/"+maxRadiation);	
-		System.out.println("Thirst: " + thirst+"/"+maxThirst);
-		System.out.println("Hunger: " + hunger+"/"+maxHunger);
+		Control.ViewExplorerStats(this);
 		TakeBreak();
 	}
 	public int PlayerAttack(){
@@ -308,6 +288,10 @@ public class Explorer extends Object{
 	}
 
 	//getters and setters
+
+	public Consumable[] getInventory() {
+		return inventory;
+	}
 
 	public void setHealth(int health) {
 		this.health = health;

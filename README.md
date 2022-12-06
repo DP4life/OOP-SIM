@@ -1,6 +1,6 @@
 # OOP-SIM
 
-I have completed the simulation. The code is a bit messy, because I was a little too ambitious with my idea and it was hard enough just to get it to work. So I abandoned any attempt at making the code conform to any principles. That is why I have a lot of private variables with useless getters and setters (the remnants of the enapsulation lab) right next to public variables. Here is the class diagram of my program
+I have decomposed some functions into View and Control. I moved the gameplay loop to Control and all the declarations to the Model. To be honest my output and input are tied to the logic in the classes themselves so breaking them to the MVC model will just be more code for the sake of pointless structure.
 
 <img src ="./out/classes/Simulation.png">
 <br>
